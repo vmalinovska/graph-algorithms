@@ -1,3 +1,4 @@
+from collections import deque
 def answer(V,L,s,t):
     G=[set() for _ in range(V+1)]
     L.sort(reverse=True, key=lambda x: x[2])
@@ -8,15 +9,16 @@ def answer(V,L,s,t):
             G[x].add(y)
             G[y].add(x)
             idx+=1
-        if dfs(G,s,t):
+        if bfs(G,s,t):
             return limit
     return None
 
-def dfs(G,s,t):
+def bfs(G,s,t):
     visited=set()
-    stack=[s]
+    stack=deque()
+    stack.append(s)
     while stack:
-        v=stack.pop()
+        v=stack.popleft()
         if v==t:
             return True
         if v in visited:
